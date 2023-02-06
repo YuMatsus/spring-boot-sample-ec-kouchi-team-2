@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+	<div id="carousel" th:replace="~{stores/top :: carousel}"></div>
+	<div class="container">
+		<p class="mt-5">様々な種類の料理を提供するフードデリバリーサービス。<br>
+			料理や食料調達の手間を惜しむ方々への栄養をご提供いたします。</p>
+		<h3 class="mt-5">NutritionDeliveryの特徴</h3>
+		<div class="row justify-content-center mt-4">
+			<div class="col-3">
+				<a href="/stores/">
+					<div class="card">
+						<img class="card-img-top" src="/images/parts/sub01.jpg" alt="Card image cap">
+						<div class="card-body text-center">
+							<h6 class="card-title">いつでも注文</h6>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-3">
+				<a href="/stores/">
+					<div class="card">
+						<img class="card-img-top" src="/images/parts/sub02.jpg" alt="Card image cap">
+						<div class="card-body text-center">
+							<h6 class="card-title">栄養を</h6>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-3">
+				<a href="/stores/">
+					<div class="card">
+						<img class="card-img-top" src="/images/parts/sub03.jpg" alt="Card image cap">
+						<div class="card-body text-center">
+							<h6 class="card-title">デリバリー</h6>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+
+		<!-- ログインフォーム -->
+		<div class="row my-5">
+			<div class="col-lg-5 col-md-7 col-sm-7 mx-auto">
+				<div class="register_box">
+				    <h1>[[ ${title} ]]</h1>
+				    <form th:action="@{/login}" method="post">
+				        <p>
+				            <!--<label for="email">メールアドレス: </label>-->
+				            <input type="email" id="email" name="email" placeholder="メールアドレス" required autofocus>
+				        </p>
+				        <p>
+				           <!-- <label for="password">パスワード: </label>-->
+				            <input type="password" id="password" name="password" placeholder="パスワード" required>
+				        </p>
+				        <p class="mt-3"><input type="submit" value="ログイン" class="button"/></p>
+				    </form>
+					<div class="text-center">
+						<input class="btn btn-secondary mt-1" type="submit" value=" 会員登録はこちら " onclick="location.href='/users/sign_up'">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--モーダル-->
+		<div th:each="item : ${items}">
+			<div class="modal fade" th:id="'item' + ${item.id}" tabindex="-1">
+				<div class="modal-dialog modal-md">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-6">[[ ${item.name} ]]</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<img th:src="@{/images/{image} (image=${item.image})}" class="img-fluid">
+						</div>
+						<div class="modal-footer">
+							<!-- 表示詳細 -->
+							<!-- <p>料理名: [[ ${item.name} ]]</p> -->
+							<p>価格: [[ ${item.price} ]]円</p>
+							<p>
+								<span>カテゴリー: </span>
+								<span th:each="itemCategory, stat : ${item.itemCategories}" th:text="!${stat.last} ? ${itemCategory.name} + ', ': ${itemCategory.name}">
+								</span>
+							</p>
+							<p>
+								<span>栄養素: </span>
+								<span th:each="nutrient, stat : ${item.nutrients}" th:text="!${stat.last} ? ${nutrient.name} + ', ': ${nutrient.name}">
+								</span>
+							</p>
+							<p>[[ ${item.description} ]]</p>
+							<form th:action="@{/cart/add/{itemId} (itemId=${item.id})}" method="post">
+								<input class="btn btn-secondary" type="submit" value="カートに追加">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

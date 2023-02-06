@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+<div class="edit_box">
+    <h1>[[ ${title} ]]</h1>
+    <p><img class="store" th:src="@{/images/{image} (image=${store.image})}"></p>
+    <form th:action="@{/stores/update_image/{id} (id=${store.id})}" enctype="multipart/form-data" th:object="${editImageForm}" method="post">
+        <ul>
+            <li th:each="error : ${#fields.detailedErrors()}">
+                <span th:text="${error.message}"></span>
+            </li>
+        </ul>
+        <p>
+            <label for="image">画像 </label>
+            <label class="button">
+            ファイルを選択
+            <input type="file" id="image" th:field="*{image}" >
+            </label>
+        </p>
+        <p><input type="submit" value="投稿" class="button"/></p>
+    </form>
+</div>
+</div>
+</html>

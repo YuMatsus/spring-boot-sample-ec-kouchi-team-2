@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-8 col-sm-9 mx-auto">
+				<div class="edit_box">
+				    <h1 class="fs-3">[[ ${title} ]]</h1>
+				    <form method="POST" th:action="@{/stores/update/{id} (id=${store.id})}" th:object="${storeEditForm}">
+				        <ul>
+				            <li th:each="error : ${#fields.detailedErrors()}">
+				                <span th:text="${error.message}"></span>
+				            </li>
+				        </ul>
+				        <p>
+				            <label for="name">店舗名 </label>
+				            <input type="text" id="name" th:field="*{name}" autofocus="autofocus" >
+				        </p>
+				        <p>
+				            <label for="address">住所 </label>
+				            <input type="text" id="address" th:field="*{address}" autofocus="autofocus" >
+				        </p>
+				        <p>
+				            <label for="description">説明 </label>
+				            <input type="text" id="description" th:field="*{description}" autofocus="autofocus" >
+				        </p>
+				        <p>
+				            <label for="storeCategoryIds">カテゴリー </label><br>
+							<select id="storeCategoryIds" th:field="*{storeCategoryIds}" class="form-control multiselect" multiple="multiple">
+								<option th:each="category : ${storeCategories}" th:value="${category.id}" th:text="${category.name}" th:field="*{storeCategoryIds}">MultiSelect</option>
+							</select>
+				        </p>
+				        <p><input type="submit" value="変更" class="button"/></p>
+				        <form method="POST" th:action="@{/stores/delete/{id} (id=${store.id})}">
+				            <input type="submit" value="削除" >
+				        </form>
+				    </form>
+				    <p><a th:href="@{/stores/edit_image/{id} (id=${store.id})}">画像の変更</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Multiselect -->
+	<script src="/js/bootstrap-multiselect.js"></script>
+	<script src="/js/bootstrap-multiselect-modifier.js"></script>
+
+</div>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="main">
+		<div class="container">
+			<h1 class="my-4 fs-4">[[${title}]]</h1>
+			<div class="row">
+				<div class="col-lg-9 col-md-10 col-sm">
+					<div>
+						<p th:if="${#lists.isEmpty(orders)}">注文履歴はありません。</p>
+					</div>
+					<div class="card item" th:each="order : ${orders}">
+						<div class="row item_row">
+							<div class="col item_description">
+								<h2 class="item_title">
+									<a th:href="@{/order/history/detail/{id} (id=${order.id})}">
+										注文日: [[ ${#temporals.format(order.createdAt, 'yyyy年MM月dd日 hh:mm')} ]]
+									</a>
+								</h2>
+								<div th:each="orderedItem : ${order.orderedItems}">
+									<div>
+										[[ ${orderedItem.item.name} ]]
+										[[ ${orderedItem.item.price} ]]円
+										x[[ ${orderedItem.quantity} ]]
+										[[ ${orderedItem.item.calorie} ]]kcal
+										x[[ ${orderedItem.quantity} ]]
+									</div>
+								</div>
+								<div>合計金額: [[ ${#aggregates.sum(order.orderedItems.![price])} ]]円</div>
+								<div>合計カロリー: [[ ${#aggregates.sum(order.orderedItems.![calorie])} ]]kcal</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>

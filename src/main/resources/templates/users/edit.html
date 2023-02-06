@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-8 col-sm-9 mx-auto">
+				<div class="edit_box">
+				    <h1 class="fs-3">[[ ${title} ]]</h1>
+				    <form method="POST" th:action="@{/users/update/{id} (id=${user.id})}" th:object="${userEditForm}">
+				        <ul>
+				            <li th:each="error : ${#fields.detailedErrors()}">
+				                <span th:text="${error.message}"></span>
+				            </li>
+				        </ul>
+				        <p>
+				            <label for="name">ユーザー名 </label>
+				            <input type="text" id="name" th:field="*{name}" autofocus="autofocus" >
+				        </p>
+				        <p>
+				            <label for="address">住所 </label>
+				            <input type="text" id="address" th:field="*{address}" autofocus="autofocus" >
+				        </p>
+				        <p>
+				            <label for="email">メールアドレス </label>
+				            <input type="text" id="email" th:field="*{email}" autofocus="autofocus" >
+				        </p>
+				        <p><input type="submit" value="変更" class="button"/></p>
+				    </form>
+				    <p><a th:href="@{/users/edit_password/{id} (id=${user.id})}">パスワードの変更</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

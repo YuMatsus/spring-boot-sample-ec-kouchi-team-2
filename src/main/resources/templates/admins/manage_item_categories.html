@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+<div class="manage_box">
+    <h1>[[ ${title} ]]</h1>
+	<p><a class="add_button" href="/admin/item_categories/add">カテゴリーの追加</a></p>
+	<table>
+		<thead>
+			<tr>
+				<th>カテゴリー</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="itemCategory : ${itemCategories}">
+				<td>[[ ${itemCategory.name} ]]</td>
+				<td>
+					<a th:href="@{/admin/item_categories/edit/{id} (id = ${itemCategory.id}) }">編集</a>
+					<form method="POST" th:action="@{/admin/item_categories/delete/{id} (id=${itemCategory.id})}">
+                        <input type="submit" value="削除" >
+                    </form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</div>
+</html>

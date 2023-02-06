@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+    <div class="container">
+        <div class="row text-center">
+            <h1 class="fs-3 my-5">[[ ${title} ]]</h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-md-10 col-sm-11 mx-auto text-center">
+                <div class="table-responsive mb-5">
+                    <table class="table text-center text-nowrap detail_box">
+                        <tbody>
+                            <tr>
+                                <th scope="row">ユーザー名</th>
+                                <td>[[ ${user.name} ]]</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">メールアドレス</th>
+                                <td>[[ ${user.email} ]]</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">住所</th>
+                                <td>[[ ${user.address} ]]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p><a th:href="@{/users/edit/{id} (id=${user.id})}">編集</a></p>
+                <th:block th:if="${#strings.contains(loginUser.roles, 'ROLE_OWNER') or #strings.contains(loginUser.roles, 'ROLE_ADMIN')}">
+                	<p><a th:href="@{/owner/stores/}">店舗管理</a></p>
+               	</th:block>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

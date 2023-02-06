@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-8 col-sm-9 mx-auto">
+				<div class="edit_box">
+				    <h1>[[ ${title} ]]</h1>
+				
+				    <form th:action="@{/admin/users/register_owner}" th:object="${registerOwnerForm}" method="post">
+				        <ul>
+				            <li th:each="error : ${#fields.detailedErrors()}">
+				                <span th:text="${error.message}">エラー</span>
+				            </li>
+				        </ul>
+				        <p>
+				            <label for="name">ユーザー名 </label>
+				            <input type="text" id="name" name="name" autofocus="autofocus" >
+				        </p>
+				        <p>
+				            <label for="address">住所 </label>
+				            <input type="address" id="address" name="address" >
+				        </p>
+				        <p>
+				            <label for="email">メールアドレス </label>
+				            <input type="email" id="email" name="email" >
+				        </p>
+				        <p>
+				            <label for="password">パスワード </label>
+				            <input type="password" id="password" name="password" >
+				        </p>
+				        <p><input type="submit" value="登録" class="button"/></p>
+				    </form>
+				</div>
+			</div>
+	</div>
+	</div>
+</div>
+</html>

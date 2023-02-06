@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+    <div class="container mt-3">
+        <div class="row">
+            <h1 class="text-center">[[${title}]]</h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-md- ml-3">
+                <div class="row">
+                    <form method="POST" th:action="@{/order/{id} (id=${loginUser.id})}" id="orderForm" th:object="${orderForm}">
+                        <ul>
+                            <li th:each="error : ${#fields.detailedErrors()}">
+				                <span th:text="${error.message}"></span>
+				            </li>
+				        </ul>
+						<h2 class="my-3 fs-3">お支払い方法</h2>
+						<div th:each="item : ${radioPaymentMethod}">
+							<input type="radio" id="paymentMethod" th:text="${item.value}" th:value="${item.key}" th:field="*{paymentMethod}">
+						</div>						
+						<h2 class="mt-4 fs-3">お届け時間</h2>
+						<p>即時配達の場合、[[${#temporals.format(deliveryTime, 'yyyy年M月d日 H時m分')}]] 頃お届け予定です。</p>						
+						<div th:each="item : ${radioDeliveryPreservation}">
+							<input type="radio" id="deliveryPreservation" th:text="${item.value}" th:value="${item.key}" th:field="*{deliveryPreservation}">
+						</div>				
+						<div>
+							<input type="datetime-local" id="deliveryTime" th:field="*{deliveryTime}" autofocus="autofocus"
+								th:attr="min=${#temporals.format(deliveryTime, 'YYYY-MM-DD''T''hh:mm')}" >
+						</div>					
+					</form>
+			    </div>
+				<h2 class="mt-4 fs-3">お届け先</h2>
+				<p>宛名: [[ ${loginUser.name} ]] 様</p>
+				<p>住所: [[ ${loginUser.address} ]]</p>
+				<h2 class="mt-4 fs-3">カート</h2>
+				<div class="row">
+					<div class="col">
+						<div>
+							<p th:if="${#lists.isEmpty(cartItems)}">カートに料理はありません。</p>
+						</div>
+						<!--<div class="card item" th:each="cartItem : ${cartItems}">-->
+						<div class="box_margin mb-5" th:each="cartItem : ${cartItems}">
+							<div class="row item_row">
+								<div class="col-5 item_figure">
+									<img class="img-fluid" style="height: 12rem; width:100%; object-fit: cover;" th:src="@{/images/{image} (image=${cartItem.item.image})}">
+								</div>
+								<div class="col-7 item_description">
+									<h2 class="item_title">
+										<a th:href="@{/items/detail/{id} (id=${cartItem.item.id})}">
+											[[ ${cartItem.item.name} ]]
+										</a>
+									</h2>
+									<div>[[ ${cartItem.item.price} ]] 円</div>
+									<div>[[ ${cartItem.item.calorie} ]] kcal</div>
+									<div>[[ ${cartItem.item.description} ]]</div>
+									<form th:action="@{/cart/delete/{itemId} (itemId=${cartItem.item.id})}" method="post">
+										<button class="change_button" type="submit">削除</button>
+									</form>
+									<form th:action="@{/cart/update_quantity/{id} (id=${cartItem.id})}" method="post">
+										<label for="quantity">数量: </label>
+										<input type="number" id="quantity" name="quantity" th:value="${cartItem.quantity}" min="1" max="999" step="1">
+										<button class="change_button" type="submit">変更</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-7 col-sm-7 col-10 mx-auto">
+				<div class="card">
+				    <div class="card-header text-center">
+    					<p class="my-auto">支払合計</p>
+                    </div>
+                    <div class="card-body">
+                    <h5 class="card-title">合計: [[ ${#aggregates.sum(cartItems.![price])}]] 円 (税込)</h5>
+                    <h5 class="card-title">合計: [[ ${#aggregates.sum(cartItems.![calorie])}]] kcal</h5>		    
+                    <div class="d-grid gap-2 col-6 mx-auto mt-4">
+                        <input class="btn btn-danger" type="submit" form="orderForm" value="注文する">
+                        <a class="btn btn-secondary" th:href="@{/cart/{userId} (userId=${loginUser.id})}"><small>カートに戻る</small></a>
+                    </div>
+				</div>
+			</div>				
+		</div>
+	</div>
+</div>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+	<div class="container">
+		<div class="row">
+			<div class="col mx-auto text-center manage_box">
+			    <h1>[[ ${title} ]]</h1>
+			    <a class="add_button" th:href="@{/items/register/{storeId} (storeId=${store.id})}">新規追加</a>
+				<div class="table-responsive mb-5">
+					<table class="table text-center text-nowrap">
+						<thead> 
+							<tr>
+								<th scope="row">名前</th>
+								<th scope="row">金額</th>
+								<th scope="row">カロリー</th>
+								<th scope="row">カテゴリー</th>
+								<th scope="row">栄養</th>
+								<th scope="row">説明</th>
+								<th scope="row">画像</th>
+								<th scope="row">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="item : ${items}">
+								<td><a th:href="@{/items/detail/{id} (id=${item.id})}">[[ ${item.name} ]]</a></td>
+								<td>[[ ${item.price} ]]</td>
+								<td>[[ ${item.calorie} ]]</td>
+								<td>
+									<span th:each="itemCategory, stat : ${item.itemCategories}" th:text="!${stat.last} ? ${itemCategory.name} + ', ': ${itemCategory.name}">
+									</span>
+								</td>
+								<td>
+									<span th:each="nutrient, stat : ${item.nutrients}" th:text="!${stat.last} ? ${nutrient.name} + ', ': ${nutrient.name}">
+									</span>
+								</td>
+								<td>[[ ${item.description} ]]</td>
+								<td><img class="img-fluid" th:src="@{/images/{image} (image=${item.image})}"></td>
+								<td>
+									<a th:href="@{/items/edit/{id} (id=${item.id})}">編集</a>
+									<form method="POST" th:action="@{/items/delete/{id} (id=${item.id})}">
+				                        <input type="submit" value="削除" >
+				                    </form>
+								</td>
+							</tr>
+						</tbody>
+					</table>			
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>
+
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+	<div class="container">
+		<div class="row my-5">
+			<div class="col-lg-5 col-md-7 col-sm-7 mx-auto">
+
+				<div class="register_box">
+					<h1>[[ ${title} ]]</h1>
+
+					<form th:action="@{/users/sign_up}" th:object="${signUpForm}" method="post">
+						<p>
+							<!--<label for="name">ユーザー名: </label>-->
+							<input type="text" id="name" name="name" autofocus="autofocus" placeholder="ユーザー名">
+						</p>
+						<p>
+							<!--<label for="address">住所: </label>-->
+							<input type="address" id="address" name="address" placeholder="住所">
+						</p>
+						<p>
+							<!--<label for="email">メールアドレス: </label>-->
+							<input type="email" id="email" name="email" placeholder="メールアドレス">
+						</p>
+						<p>
+							<!--<label for="password">パスワード: </label>-->
+							<input type="password" id="password" name="password" placeholder="パスワード">
+						</p>
+						<p>
+							<!--<label for="password">パスワード: </label>-->
+							<input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="パスワードの確認">
+						</p>
+						<p class="error_message" th:each="error : ${#fields.detailedErrors()}">
+							<span th:text="${error.message}">エラー</span>
+						</p>
+						<p><input type="submit" value="アカウントを作成" class="button" /></p>
+					</form>
+
+					<p><a th:href="@{users/login}">ログイン</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>

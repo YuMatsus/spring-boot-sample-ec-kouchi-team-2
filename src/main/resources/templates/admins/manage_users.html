@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+	<div class="container">
+		<div class="row">
+			<div class="col mx-auto text-center manage_box">
+			    <h1>[[ ${title} ]]</h1>
+				<p><a class="add_button" href="/admin/users/register_owner">オーナー登録</p></a>
+				<div class="table-responsive mb-5">
+					<table class="table text-center text-nowrap">
+						<thead>
+							<tr>
+								<th scope="row">名前</th>
+								<th scope="row">メールアドレス</th>
+								<th scope="row">住所</th>
+								<th scope="row">権限</th>
+								<th scope="row">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="user : ${users}">
+								<td>[[ ${user.name} ]]</td>
+								<td>[[ ${user.email} ]]</td>
+								<td>[[ ${user.address} ]]</td>
+								<td>[[ ${user.roles} ]]</td>
+								<td>
+									<a th:href="@{/users/edit/{id} (id = ${user.id}) }">編集</a>
+									<form method="POST" th:action="@{/users/delete/{id} (id=${user.id})}">
+				                        <input type="submit" value="削除" >
+				                    </form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

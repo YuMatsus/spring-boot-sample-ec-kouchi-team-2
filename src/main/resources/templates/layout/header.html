@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
+<div th:fragment="loggedInHeader">
+    <header>
+		<nav class="navbar navbar-expand-md fixed-top" data-bs-theme="dark">
+        	<div class="container-fluid">
+	            <a class="navbar-brand logo text-white fw-bold fs-4" href="/stores/">Nutrition Delivery</a>
+	            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#header_login_nav" aria-controls="header_login_nav" aria-expanded="false" aria-label="ナビゲーション">
+	                <span class="navbar-toggler-icon" style="font-size: 1rem;"></span>
+	            </button>    
+	            <div class="collapse navbar-collapse" id="header_login_nav">
+	                <ul class="navbar-nav">
+	                    <li class="nav-item">
+	                        <a class="nav-link" th:href="@{/users/detail/{id} (id=${loginUser.id})}" aria-current="page">[[ ${loginUser.name} ]]さん</a>
+	                    </li>
+						<li class="nav-item">
+	                        <span class="nav-link" aria-current="page">[[ ${#calendars.format(#calendars.createNowForTimeZone('Asia/Tokyo'), 'yyyy年MM月dd日 HH時mm分')} ]]</span>
+	                    </li>
+						<li class="nav-item">
+	                        <span class="nav-link" aria-current="page">[[ ${loginUser.address} ]] にお届け</span>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link fa fa-shopping-cart cart-icon" id="cart" th:href="@{/cart/{userId} (userId=${loginUser.id})}"><span class="badge text-bg-danger">[[ ${#aggregates.sum(loginUser.cartItems.![quantity])}]]</span></a>
+	                         <div class="shopping-cart" style="z-index:10000">
+                                <div class="shopping-cart-header">
+                                    <i class="fa fa-shopping-cart cart-icon"></i><span class="badge text-bg-danger">[[ ${#aggregates.sum(loginUser.cartItems.![quantity])}]]</span>
+                                    <div>
+                                        <p th:if="${#lists.isEmpty(loginUser.cartItems)}">カートに料理はありません.</p>
+                                    </div>
+                                    <div class="shopping-cart-total" th:if="${#lists.size(loginUser.cartItems)}>1">
+                                        <span class="lighter-text">合計:</span>
+                                        <span class="main-color-text total"> [[ ${#aggregates.sum(loginUser.cartItems.![price])}]] 円</span>
+                                    </div>
+                                </div>
+                                <div th:if="${#lists.size(loginUser.cartItems)}>0">     
+	                                <ul class="shopping-cart-items">
+	                                	<div th:each="cartItem : ${loginUser.cartItems}">
+	                                		<li class="clearfix">
+			                                    <img class="img-fluid" style="height: 5rem; width:100%; object-fit: cover;" th:src="@{/images/{image} (image=${cartItem.item.image})}">
+			                                    <span class="item-name">[[ ${cartItem.item.name} ]]</span>
+			                                    <span class="item-detail">[[ ${cartItem.item.calorie} ]] kcal</span>
+			                                    <span class="item-price">[[ ${cartItem.item.price} ]] 円</span>
+			                                    <span class="item-quantity">個数: [[ ${cartItem.quantity} ]]</span>
+			                                </li>
+		                                </div>
+	                                </ul> 
+                            		<a th:href="@{/cart/{userId} (userId=${loginUser.id})}" class="button">カートへ進む</a>
+                            	</div>
+	                    </li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/order/history/{userId} (userId=${loginUser.id})}">注文履歴</a>
+						</li>
+	                    <th:block th:if="${loginUser.email == 'admin@admin.com'}">
+	                        <li class="nav-item">
+	                            <a class="nav-link" href="/admin/">管理</a>
+	                        </li>
+	                    </th:block>
+	                    <li class="nav-item">
+	                        <form th:action="@{/logout}" method="post">
+	                            <label class="nav-link" for="logout">ログアウト</label>
+	                            <input id="logout" type="submit" value="ログアウト">
+	                        </form>
+	                    </li>
+	                </ul>
+	            </div>
+            </div>
+        </nav>
+    </header>
+</div>
+ 
+<div th:fragment="notLoggedInHeader">
+    <header>
+	    <nav class="navbar navbar-expand-sm fixed-top" style="background-color: #37ab9d;" data-bs-theme="dark">
+	    	<div class="container-fluid">
+		    	<a class="navbar-brand logo text-white fw-bold fs-4" href="/stores/">Nutrition Delivery</a> 
+	            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#header_nav" aria-controls="header_login_nav" aria-expanded="false" aria-label="ナビゲーション">
+	                <span class="navbar-toggler-icon"></span>
+	            </button>
+	            <div class="collapse navbar-collapse" id="header_nav">            	    	
+			        <ul class="navbar-nav">
+			            <li class="nav-item">
+				            <a class="nav-link" href="/users/sign_up">サインアップ</a>
+				        </li>
+				        <li class="nav-item">
+				            <a class="nav-link" href="/users/login">ログイン</a>
+				        </li>
+			        </ul>
+		        </div>
+	        </div>
+    </header>
+</div>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-8 col-sm-9 mx-auto">
+				<div class="edit_box">
+				    <h1>[[ ${title} ]]</h1>
+				    <form th:action="@{/items/register/{storeId} (storeId=${store.id})}" enctype="multipart/form-data" th:object="${registerItemForm}" method="post">
+				        <ul>
+				            <li th:each="error : ${#fields.detailedErrors()}">
+				                <span th:text="${error.message}"></span>
+				            </li>
+				        </ul>
+				        <p>
+				            <label for="name">料理名 </label>
+				            <input type="text" id="name" th:field="*{name}" autofocus="autofocus" >
+				        </p>
+				        <p>
+				            <label for="price">価格 </label>
+				            <input type="text" id="price" th:field="*{price}" autofocus="autofocus" >
+				        </p>
+				        <p>
+				            <label for="calorie">カロリー </label>
+				            <input type="text" id="calorie" th:field="*{calorie}" autofocus="autofocus" >
+				        </p>
+				        <p>
+				            <label for="itemCategoryIds">カテゴリー </label><br>
+							<select id="itemCategoryIds" th:field="*{itemCategoryIds}" class="form-control multiselect" multiple="multiple">
+								<option th:each="category : ${itemCategories}" th:value="${category.id}" th:text="${category.name}" th:field="*{itemCategoryIds}">MultiSelect</option>\
+							</select>
+				        </p>
+				        <p>
+				            <label for="nutrientIds">栄養素 </label><br>
+							<select id="nutrientIds" th:field="*{nutrientIds}" class="form-control multiselect" multiple="multiple">
+								<option th:each="nutrient : ${nutrients}" th:value="${nutrient.id}" th:text="${nutrient.name}" th:field="*{nutrientIds}">MultiSelect</option>\
+							</select>
+				        </p>
+				        <p>
+				            <label for="description">説明 </label>
+				            <input type="text" id="description" th:field="*{description}" autofocus="autofocus" >
+				        </p>
+				        <p>
+				            <label for="image">画像: </label>
+				            <label class="button">
+				            ファイルを選択
+				            <input type="file" id="image" th:field="*{image}" >
+				            </label>
+				        </p>
+				 
+				        <p><input type="submit" value="登録" class="button"/></p>
+				    </form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Multiselect -->
+	<script src="/js/bootstrap-multiselect.js"></script>
+	<script src="/js/bootstrap-multiselect-modifier.js"></script>
+
+</div>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="main">
+		<div class="container">
+			<div class="row">
+				<h1 class="fs-4 my-3">[[${title}]] [[ ${#temporals.format(order.createdAt, 'yyyy年MM月dd日 hh:mm')} ]]</h1>
+			</div>
+			<div class="row">
+				<div class="col-lg-9 col-md-10 col-sm">
+					<div class="card item" th:each="orderedItem : ${order.orderedItems}">
+						<div class="row item_row">
+							<div class="col-4 item_figure">
+								<img class="img-fluid" th:src="@{/images/{image} (image=${orderedItem.item.image})}">
+							</div>
+							<div class="col-8 item_description">
+								<h2 class="item_title">
+									[[ ${orderedItem.item.name} ]]
+								</h2>
+								<div>数量: [[ ${orderedItem.quantity} ]]</div>
+								<div>金額: [[ ${orderedItem.item.price} ]]円</div>
+								<div>カロリー: [[ ${orderedItem.item.calorie} ]]kcal</div>
+								<div>[[ ${orderedItem.item.description} ]]</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div><p class="fs-5">合計金額: [[ ${#aggregates.sum(order.orderedItems.![price])} ]]円</p></div>
+				<div><p class="fs-5">合計カロリー: [[ ${#aggregates.sum(order.orderedItems.![calorie])} ]]kcal</p></div>
+				<div class="text-center">
+				<form th:action="@{/order/add_cart/{id} (id=${order.id})}" method="post">
+					<p><input type="submit" value="もう一度注文する" class="button"/></p>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>

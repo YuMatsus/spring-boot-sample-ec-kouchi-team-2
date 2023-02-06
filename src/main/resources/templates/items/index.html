@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+	<script src="/js/update-element-by-id.js"></script>
+	<script>
+		function changeSelectValue(index, targetElementId) {
+			document.getElementById(targetElementId).selectedIndex = index;
+		}
+	</script>
+	<div class="container contents">
+		<div class="row">
+			<h1 class="fs-2">[[ ${store.name} ]]</h1>
+			<p>店舗住所: [[ ${store.address} ]]</p>
+		</div>	
+		<div class="row">
+			<p>
+				<!-- カテゴリー選択用プルダウン -->
+				<div class="pulldown_frame col-11 col-sm-8 col-md-6 col-lg-5">
+				<select id="storeCategoryList" class="pulldown" onchange="updateElementById(this.value, 'category', 'itemView');changeSelectValue(0, 'nutrientList')">
+					<option value="0">カテゴリーで絞り込む</option>
+					<option th:each="category : ${itemCategories}" th:value="${category.id}" th:text="${category.name}">Select</option>
+				</select>
+				</div>
+			</p>
+			<p>
+				<!-- 栄養素選択用プルダウン -->
+				<div class="pulldown_frame col-11 col-sm-8 col-md-6 col-lg-5">
+				<select id="nutrientList" class="pulldown" onchange="updateElementById(this.value, 'nutrient', 'itemView');changeSelectValue(0, 'storeCategoryList')">
+					<option value="0">栄養素で絞り込む</option>
+					<option th:each="nutrient : ${nutrients}" th:value="${nutrient.id}" th:text="${nutrient.name}">Select</option>
+				</select>
+				</div>
+			</p>
+		</div>
+		<div class="row mt-4">
+			<div class="col">
+				<h2 class="fs-3">メニュー</h2>
+			</div>
+		</div>
+		<!-- 料理一覧の表示部分(プルダウンで選択したカテゴリーまたは栄養素に基づいて抽出表示) -->
+		<div class="row" th:fragment="itemView" id="itemView">
+			<div class="col-11 col-sm-11 col-md-9 col-lg-6 card item" th:each="item : ${items}">
+				<a th:href="@{/items/detail/{id} (id=${item.id})}" data-bs-toggle="modal" th:data-bs-target="'#item' + ${item.id}">
+					<div class="row item_row">
+						<div class="col-5 item_figure">
+							<img class="img-fluid" style="height: 11rem; width:100%; object-fit: cover;" th:src="@{/images/{image} (image=${item.image})}">
+						</div>
+						<div class="col-7 item_description ">
+							<h5 class="item_title">[[ ${item.name} ]]</h5>
+							<div class="fs-6">[[ ${item.price} ]] 円</div>
+							<div class="fs-6">[[ ${item.calorie} ]] kcal</div>
+							<div class=>[[ ${item.description} ]]</div>
+							<form th:action="@{/cart/add/{itemId} (itemId=${item.id})}" method="post">
+								<button class="item_add d-flex mx-auto fs-6" type="submit" >カートに追加</button>
+							</form>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>	
+		<!-- NutritionDelivery社の料理一覧  -->
+		<div class="row" style=" margin-top:1rem;">
+			<h3 class="fs-4 mt-3" style="border-bottom: 1px solid #4dc0b2;">こちらもご一緒に如何ですか?</h3>
+			<div class="col-11 col-sm-11 col-md-9 col-lg-6 card item" th:each="item : ${adminItems}">
+				<a th:href="@{/items/detail/{id} (id=${item.id})}" data-bs-toggle="modal" th:data-bs-target="'#admin_item' + ${item.id}">
+					<div class="row item_row">
+						<div class="col-5 item_figure">
+							<img class="img-fluid" style="height: 11rem; width:100%; object-fit: cover;" th:src="@{/images/{image} (image=${item.image})}">
+						</div>
+						<div class="col-7 item_description ">
+							<h5 class="item_title">[[ ${item.name} ]]</h5>
+							<div class="fs-6">[[ ${item.price} ]] 円</div>
+							<div class="fs-6">[[ ${item.calorie} ]] kcal</div>
+							<div class=>[[ ${item.description} ]]</div>
+							<form th:action="@{/cart/add/{itemId} (itemId=${item.id})}" method="post">
+								<button class="item_add d-flex mx-auto" type="submit">カートに追加</button>
+							</form>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<!--モーダル 店舗の料理-->
+	<div th:each="item : ${items}">
+		<!-- 属性 aria-labelledby="exampleModalLabel" modalタイトルなどと関連付け？-->
+		<div class="modal fade" th:id="'item' + ${item.id}"  tabindex="-1">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-6">料理名: [[ ${item.name} ]]</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<!-- 画像部分 -->
+						<img th:src="@{/images/{image} (image=${item.image})}" class="img-fluid">
+					</div>
+					<div class="modal-footer">
+						<!-- 表示詳細 -->
+						<!-- <p>料理名: [[ ${item.name} ]]</p> -->
+						<p>価格: [[ ${item.price} ]]円</p>
+						<p>カロリー: [[ ${item.calorie} ]]kcal</p>
+						<p>
+							<span th:each="itemCategory, stat : ${item.itemCategories}" th:text="!${stat.last} ? ${itemCategory.name} + ', ': ${itemCategory.name}">
+							</span>
+						</p>
+						<p>
+							<span>栄養素: </span>
+							<span th:each="nutrient, stat : ${item.nutrients}" th:text="!${stat.last} ? ${nutrient.name} + ', ': ${nutrient.name}">
+							</span>
+						</p>
+						<p>[[ ${item.description} ]]</p>
+						<form th:action="@{/cart/add/{itemId} (itemId=${item.id})}" method="post">
+							<input class="item_add" type="submit" value="カートに追加">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<!--モーダル NutritionDelivery社の料理-->
+	<div th:each="item : ${adminItems}">
+		<!-- 属性 aria-labelledby="exampleModalLabel" modalタイトルなどと関連付け？-->
+		<div class="modal fade" th:id="'admin_item' + ${item.id}"  tabindex="-1">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-6">料理名: [[ ${item.name} ]]</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<!-- 画像部分 -->
+						<img th:src="@{/images/{image} (image=${item.image})}" class="img-fluid">
+					</div>
+					<div class="modal-footer">
+						<!-- 表示詳細 -->
+						<!-- <p>料理名: [[ ${item.name} ]]</p> -->
+						<p>価格: [[ ${item.price} ]]円</p>
+						<p>カロリー: [[ ${item.calorie} ]]kcal</p>
+						<p>
+							<span th:each="itemCategory, stat : ${item.itemCategories}" th:text="!${stat.last} ? ${itemCategory.name} + ', ': ${itemCategory.name}">
+							</span>
+						</p>
+						<p>
+							<span>栄養素: </span>
+							<span th:each="nutrient, stat : ${item.nutrients}" th:text="!${stat.last} ? ${nutrient.name} + ', ': ${nutrient.name}">
+							</span>
+						</p>
+						<p>[[ ${item.description} ]]</p>
+						<form th:action="@{/cart/add/{itemId} (itemId=${item.id})}" method="post">
+							<input class="btn btn-secondary" type="submit" value="カートに追加">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+</div>
+</html>

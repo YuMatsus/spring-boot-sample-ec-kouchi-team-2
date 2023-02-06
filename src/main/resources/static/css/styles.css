@@ -1,0 +1,415 @@
+html{
+	height:100%;
+}
+body{
+	background-color:#fff;
+	color:#586365;
+	height:100%;
+}
+main{
+	padding-top:48px;
+	padding-bottom:130px;
+}
+
+/* エラーメッセージ */
+.error_message{
+	color: red;
+	text-align: left;
+}
+
+/*↓リンク要素の青字とマウスホバーアクションを無効化*/
+a,a:hover{
+  color:inherit;
+  text-decoration: none;
+}
+.header_nav {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+}
+.header_nav li {
+    margin-right: 30px;
+}
+
+#logout {
+	display:none;
+}
+
+.item_table {
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+.item_table th, .item_table td {
+	border: solid 1px black;
+	padding: 5px;
+}
+
+.item_image {
+	height: 150px;
+}
+
+/*ヘッダー*/
+.navbar{
+	background-color: #37ab9d;
+	color: #586365;
+}
+
+/*.navbar-light .navbar-brand .logo{
+	color: #fff;
+	font-size: 25px;
+	font-weight: bold;
+	background-color:#37ab9d;
+}*/
+
+.navbar-collapse{
+	justify-content: flex-end;
+}
+.nav-link{
+	color: #586365;
+}
+
+.header_nav{
+	background-color:#37ab9d;
+	color: #586365;
+	justify-content: flex-end;
+	margin:0px;
+}
+/*サインアップ・ログイン画面*/
+.register_box{
+	/*margin:auto;*/
+	/*width:500px;*/
+	/*height:auto;*/
+	border:solid 2px #4dc0b2;
+	border-radius: 10px;
+	padding:25px;
+	text-align:center;
+	background-color: #fff;
+	/*margin-top: 50px;*/
+	/*margin-bottom: 100%;*/
+}
+.register_box h1{
+	font-size:25px ;
+	color:#001e1d;
+	margin-bottom:25px;
+}
+
+input#name, input#address, input#email, input#password, input#passwordConfirm, input#description,input#price,input#category,input#nutrition, input#rawPassword, input#newPassword, input#newPasswordConfirm,input#calorie,input#number {
+    width: -webkit-fill-available;
+    height: 50px;
+    border-radius: 10px;
+    border: solid 2px #DFDFDF;
+}
+
+input.button{
+	display: inline-block;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    padding: 12px 12px;
+    background: #4dc0b2;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    border: 2px solid #37ab9d;
+    width: 50%;
+}
+input.button:hover{
+	color:#586365;
+	background-color:#fff;
+}
+
+.register_box a{
+	color:#586365;
+}
+
+.register_box a:hover{
+	color:#586365;
+	background-color:#fff;
+}
+
+/*ユーザー詳細ページ*/
+.detail_box{
+	text-align: center;
+	/*margin-top:50px;*/
+	border-bottom: solid 1px #4dc0b2;
+}
+.detail_box h1{
+	margin-bottom: 30px;
+}
+.detail_box dl{
+	display: flex;
+	flex-flow: row wrap;
+	width: 60%;
+	margin: auto ;
+}
+.detail_box dt{
+	border-bottom: solid 1px #4dc0b2;
+	width:25%;
+	margin-right:5%;
+	margin-bottom:20px;
+}
+.detail_box dd{
+	border-bottom: solid 1px #4dc0b2;
+	margin-bottom: 20px;
+	width:70%;
+}
+
+/*ユーザー編集・店舗登録・オーナー登録ページ*/
+.edit_box{
+	margin:auto;
+	/*width:500px;ユーザー編集画面をグリッド幅形式で対応*/
+	height:auto;
+	border-radius: 10px;
+	padding:25px;
+	text-align:center;
+	background-color: #fff;
+	margin-top: 50px;
+	margin-bottom: 100%;
+}
+.edit_box p{
+	text-align: start;
+}
+.edit_box p:last-of-type{
+	text-align: unset;
+	margin-top:30px;
+}
+label.button{
+	display: inline-block;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    padding: 6px 6px;
+    background: #586365;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    border: 2px solid #283c63;
+    width: 50%;
+}
+label.button:hover{
+	color:#586365;
+	background-color:#fff;
+}
+
+/*管理ページ*/
+.manage_box{
+	text-align: center;
+	margin-top: 50px;
+}
+.manage_box table{
+	width:90%;
+	margin:auto;
+	margin-top:10px;
+}
+.manage_box th{
+	border-bottom: 2px dashed #ffc042;
+}
+.manage_box td{
+	padding:5px;
+	border-bottom: 1px double #ffc042;
+	vertical-align:middle;
+}
+.manage_box td a{
+	color:#37ab9d;
+}
+.add_button{
+	display: inline-block;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    padding: 6px 54px;
+    background: #ffc042;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    border: 2px solid #f0b400;
+    /*width: 25%;*/
+    width: fit-content;
+    margin:20px;
+}
+.add_button:hover{
+	color:#586365;
+	background-color:#fff;
+}
+
+input#image{
+	display:none;
+}
+.main_title {
+	color: #283c63;
+}
+
+.contents {
+	padding-top: 30px;
+}
+.search {
+	margin: 20px 0;
+}
+
+.search .btn.btn-outline-secondary {
+	background-color: #f1eaf5;
+}
+.category {
+	padding: 10px;
+}
+
+.nav_title {
+	font-size: 16px;
+	color: #283c63;
+	background-color: #f0b400;
+	padding: 10px 0;
+}
+
+.category_menu a {
+	display: block;
+}
+
+
+.item.card {
+	margin-bottom: 10px;
+	padding: 10px;
+	border: solid 1px #37ab9d;
+	box-shadow: 0 3px 5px 0 #4dc0b2;
+
+}
+
+.item_row {
+	align-items: center;
+}
+.item_figure {
+	/* padding: 10px; */
+}
+.item_description {
+
+}
+.item_title {
+	font-size: 20px;
+}
+.item_title a {
+	color: #f85f73;
+}
+/*追記*/
+.change_button{
+	display: inline-block;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    padding: 6px 30px;
+    background: #79898c;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    border: 2px solid #586365;
+    /*width: 25%;*/
+    width: fit-content;
+    /*margin:20px;*/
+}
+.change_button:hover{
+	color:#79898c;
+	background-color:#fff;
+}
+
+.fs-3{
+	border-bottom: 1px solid #4dc0b2;
+}
+.box_margin{
+	margin:10px auto;
+}
+.item_add{
+	display: inline-block;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    padding: 6px 27px;
+    background: #4dc0b2;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    border: 2px solid #37ab9d;
+    /*width: 75%;*/
+    width: fit-content;
+    margin:10px auto;
+    
+}
+.item_add:hover{
+	color:#586365;
+	background-color:#fff;
+}
+
+
+/*.order_button{
+	display: inline-block;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    padding: 6px 54px;
+    background: #FB7D79;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    border: 2px solid #ed5f5a;
+    width: 25%;
+    width: fit-content;
+    margin:20px;
+}
+.order_button:hover{
+	color:#586365;
+	background-color:#fff;
+}*/
+
+.pulldown_frame{
+	position: relative;
+	text-align: center;
+}
+.pulldown{
+	position: relative;
+	font-family: inherit;
+	background-color: transparent;
+	width: 100%;
+	padding: 10px 10px 10px 0;
+	font-size: 18px;
+	border-radius: 0;
+	border: none;
+	border-bottom: 1px solid #f0b400;
+}
+
+/*マルチカルーセル用 CSS サンプルコードまま*/
+@media (max-width: 767px) {
+  .carousel-inner .carousel-item > div {
+      display: none;
+  }
+  .carousel-inner .carousel-item > div:first-child {
+      display: block;
+  }
+}
+
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+  display: flex;
+}
+
+.carousel-inner .carousel-item-end,
+.carousel-inner .carousel-item-start { 
+transform: translateX(0);
+}
+
+/* medium and up screens */
+@media (min-width: 768px) {
+  
+  .multi-carousel-inner .carousel-item-end.active,
+  .multi-carousel-inner .carousel-item-next {
+    transform: translateX(25%);
+  }
+  
+  .multi-carousel-inner .carousel-item-start.active, 
+  .multi-carousel-inner .carousel-item-prev {
+    transform: translateX(-25%);
+  }
+}
+.multi-carousel-inner .carousel-item-end,
+.multi-carousel-inner .carousel-item-start { 
+transform: translateX(0);
+}
+

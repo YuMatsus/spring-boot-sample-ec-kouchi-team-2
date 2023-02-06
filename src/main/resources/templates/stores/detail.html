@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+	<div class="container">
+		<div class="row text-center">
+			<h1 class="fs-2 my-5">[[ ${title} ]]</h1>
+		</div>
+		<div class="row">
+            <div class="detail_box">
+                <div class="col-lg-8 col-md-10 col-sm-11 mx-auto text-center">
+                    <div class="table-responsive mb-5">
+                        <table class="table text-center text-nowrap detail_box">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">オーナー名</th>
+                                    <td>[[ ${store.user.name} ]]</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">店舗名</th>
+                                    <td>[[ ${store.name} ]]</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">住所</th>
+                                    <td>[[ ${store.address} ]]</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">説明</th>
+                                    <td>[[ ${store.description} ]]</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">カテゴリー</th>
+                                    <td>
+                                        <span th:each="storeCategory, stat : ${store.storeCategories}" th:text="!${stat.last} ? ${storeCategory.name} + ', ': ${storeCategory.name}">
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">写真</th>
+                                    <td><img class="store img-fluid" th:src="@{/images/{image} (image=${store.image})}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p><a th:href="@{/stores/edit/{id} (id=${store.id})}">編集</a></p>
+                    <p><a th:href="@{/owner/items/{storeId} (storeId=${store.id})}">料理の管理</a></p>
+                    <p><a th:href="@{/owner/stores/}">店舗管理に戻る</a></p>
+                </div>
+            </div>
+		</div>
+    </div>
+</div>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+<div class="manage_box">
+    <h1>[[ ${title} ]]</h1>
+	<p><a class="add_button" href="/admin/nutrients/add">栄養素の追加</a></p>
+	<table>
+		<thead>
+			<tr>
+				<th>栄養素</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="nutrient : ${nutrients}">
+				<td>[[ ${nutrient.name} ]]</td>
+				<td>
+					<a th:href="@{/admin/nutrients/edit/{id} (id = ${nutrient.id}) }">編集</a>
+					<form method="POST" th:action="@{/admin/nutrients/delete/{id} (id=${nutrient.id})}">
+                        <input type="submit" value="削除" >
+                    </form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</div>
+</html>

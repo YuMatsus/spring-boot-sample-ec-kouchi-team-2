@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+	<script src="/js/update-element-by-id.js"></script>
+
+	<div id="carousel" th:replace="~{stores/top :: carousel}"></div>
+	<div class="container">
+		<p class="mt-5">様々な種類の料理を提供するフードデリバリーサービス。<br>
+			料理や食料調達の手間を惜しむ方々への栄養をご提供いたします。</p>
+
+		<!--↓↓↓マルチカルーセル-->		
+        <div class="row mx-auto my-auto justify-content-center mt-4 mb-5">
+            <div id="multiCarousel" class="multi-carousel carousel slide" data-bs-ride="carousel">
+                <div class="multi-carousel-inner carousel-inner" role="listbox">
+                    <div class="multi-carousel-item carousel-item col-md-3" th:each="item : ${items}">
+						<div class="border-secondary" style="width: 25rem;">
+							<a th:href="@{/items/detail/{id} (id=${item.id})}" data-bs-toggle="modal" th:data-bs-target="'#item' + ${item.id}">
+								<img class="img-fluid img-thumbnail d-block m-auto" th:src="@{/images/{image} (image=${item.image})}" style="height: 13rem; width:100%; object-fit: cover;">
+							</a>
+						</div>
+					</div>
+                </div>
+                <a class="carousel-control-prev bg-transparent w-aut" href="#multiCarousel" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </a>
+                <a class="carousel-control-next bg-transparent w-aut" href="#multiCarousel" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </a>
+            </div>
+        </div>
+
+        
+        <!-- 店舗一覧 -->
+        <div class="row">
+            <!-- カテゴリー選択用プルダウン -->
+            <div class="col-11 col-sm-8 col-md-6 col-lg-5 pulldown_frame mb-3">
+                <select id="storeCategoryList" class="pulldown" onchange="updateElementById(this.value, 'category', 'storeView')">
+                    <option value="0">カテゴリーで絞り込む</option>
+                    <option th:each="category : ${storeCategories}" th:value="${category.id}" th:text="${category.name}">Select</option>
+                </select>
+            </div>
+        </div>
+        <!-- 店舗一覧の表示部分(プルダウンで選択したカテゴリーに基づいて抽出表示) -->
+        <div class="row" th:fragment="storeView" id="storeView">
+            <div class="col-12 col-lg-6 col-md-11 card store mb-2" th:each="store : ${stores}">
+                <a th:href="@{/items/{storeId} (storeId=${store.id})}">
+                    <div class="row store_row">
+                        <div class="col-5 store_figure">
+                            <img class="img-thumbnail" th:src="@{/images/{image} (image=${store.image})}" style="height: 10rem; width:100%; object-fit: cover;">
+                        </div>
+                        <div class="col-7 store_description">							
+                            <h4 class="store_title mt-3">[[ ${store.name} ]]</h4>	                        
+                            <p>[[ ${store.description} ]]</p>
+                            <small>店舗住所: [[ ${store.address} ]]</small>
+                        </div>
+                    </div>
+                </a>	
+            </div>			
+        </div>
+
+        
+        <!--モーダル-->
+        <div th:each="item : ${items}">
+            <div class="modal fade" th:id="'item' + ${item.id}" tabindex="-1">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-6">[[ ${item.name} ]]</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img th:src="@{/images/{image} (image=${item.image})}" class="img-fluid">
+                        </div>
+                        <div class="modal-footer">
+                            <!-- 表示詳細 -->
+                            <!-- <p>料理名: [[ ${item.name} ]]</p> -->
+                            <p>価格: [[ ${item.price} ]]円</p>
+                            <p>
+                                <span>カテゴリー: </span>
+                                <span th:each="itemCategory, stat : ${item.itemCategories}" th:text="!${stat.last} ? ${itemCategory.name} + ', ': ${itemCategory.name}">
+                                </span>
+                            </p>
+                            <p>
+                                <span>栄養素: </span>
+                                <span th:each="nutrient, stat : ${item.nutrients}" th:text="!${stat.last} ? ${nutrient.name} + ', ': ${nutrient.name}">
+                                </span>
+                            </p>
+                            <small>[[ ${item.description} ]]</small>
+                            <form th:action="@{/items/{storeId} (storeId=${item.store.id})}" method="get">
+                                <input class="btn btn-secondary" type="submit" th:value="${item.store.name} + ' で注文'">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!-- multi-carousel.js -->
+	<script src="/js/multi-carousel.js"></script>       
+</div>
+</html>

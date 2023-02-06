@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+	<div class="container">
+		<div class="row">
+			<div class="col mx-auto text-center manage_box">
+			    <h1>[[ ${title} ]]</h1>
+			    <a class="add_button" th:href="@{/stores/register}">新規追加</a>
+				<div class="table-responsive mb-5">
+				<table class="table text-center text-nowrap">
+					<thead>
+						<tr>
+							<th scope="row">名前</th>
+							<th scope="row">住所</th>
+							<th scope="row">カテゴリー</th>
+							<th scope="row">説明</th>
+							<th scope="row">画像</th>
+							<th scope="row">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="store : ${stores}">
+							<td><a th:href="@{/stores/detail/{id} (id=${store.id})}">[[ ${store.name} ]]</a></td>
+							<td>[[ ${store.address} ]]</td>
+							<td>
+								<span th:each="storeCategory, stat : ${store.storeCategories}" th:text="!${stat.last} ? ${storeCategory.name} + ', ': ${storeCategory.name}">
+								</span>
+							</td>
+							<td>[[ ${store.description} ]]</td>
+							<td><img class="img-fluid" th:src="@{/images/{image} (image=${store.image})}"></td>
+							<td>
+								<a th:href="@{/stores/edit/{id} (id=${store.id})}">編集</a>
+								<form method="POST" th:action="@{/stores/delete/{id} (id=${store.id})}">
+			                        <input type="submit" value="削除" >
+			                    </form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

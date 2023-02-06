@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>店舗一覧(shop_list)</title>
+</head>
+<body>
+    <div>
+        <h1>店舗一覧(shop_list)</h1>
+        <div>
+            <div id="header" th:replace="~{layout/header::notLoggedInHeader}"></div>
+        <div>
+        <div>
+            <h2>店舗で選ぶ</h2>
+            <form method="post" action="example.cgi">
+                <p>
+                <select name="example1">
+                <option value="サンプル1">選択肢のサンプル1</option>
+                <option value="サンプル2">選択肢のサンプル2</option>
+                <option value="サンプル3">選択肢のサンプル3</option>
+                <option value="サンプル4">選択肢のサンプル4</option>
+                <option value="サンプル5">選択肢のサンプル5</option>
+                </select>
+                </p>
+                <p><input type="submit" value="送信する"></p>
+                </form>
+        </div>
+        <div>
+            <div>
+                <h3>料理画像</h3>
+                <p>店舗名</p>
+            </div>
+            <div>
+                <h3>料理画像</h3>
+                <p>店舗名</p>
+            </div>
+            <div>
+                <h3>料理画像</h3>
+                <p>店舗名</p>
+            </div>
+            <div>
+                <h3>料理画像</h3>
+                <p>店舗名</p>
+            </div>
+
+        <div>
+            <div id="footer" th:replace="~{layout/footer::footer}"></div>
+        </div>
+    </div>    
+</body>

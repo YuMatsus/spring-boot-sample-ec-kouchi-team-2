@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>料理一覧(menu)</title>
+</head>
+<body>
+    <div>
+        <h1>料理一覧(menu)</h1>
+        <div>
+            <div id="header" th:replace="~{layout/header::notLoggedInHeader}"></div>
+        <div>
+        <div>
+            <h2>店舗名</h2>
+            <p>画像</p>
+            <p>店舗の説明</p>
+        </div>
+        <div>
+            <h2>料理一覧</h2>
+        </div>
+        <div>
+            <div id="footer" th:replace="~{layout/footer::footer}"></div>
+        </div>
+    </div>    
+</body>

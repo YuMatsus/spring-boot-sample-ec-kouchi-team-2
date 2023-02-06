@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main">
+	<div class="container contents">
+		<h1 class="fs-4">[[${title}]]</h1>
+		<div class="row mt-2">
+			<div class="col-sm-12 col-md-11 col-lg-10">
+				<div>
+					<p th:if="${#lists.isEmpty(cartItems)}">カートに料理はありません。</p>
+				</div>
+				<div class="card item" th:each="cartItem : ${cartItems}">
+					<div class="row item_row">
+						<div class="col-5 item_figure">
+							<img class="img-fluid" style="height: 12rem; width:100%; object-fit: cover;" th:src="@{/images/{image} (image=${cartItem.item.image})}">
+						</div>
+						<div class="col-7 item_description">
+							<h2 class="item_title">
+								<a th:href="@{/items/detail/{id} (id=${cartItem.item.id})}">
+									[[ ${cartItem.item.name} ]]
+								</a>
+							</h2>
+							<div>[[ ${cartItem.item.price} ]] 円</div>
+							<div>[[ ${cartItem.item.calorie} ]] kcal</div>
+							<div>[[ ${cartItem.item.description} ]]</div>
+							<form th:action="@{/cart/delete/{itemId} (itemId=${cartItem.item.id})}" method="post">
+								<button class="change_button" type="submit">削除</button>
+							</form>
+							<form th:action="@{/cart/update_quantity/{id} (id=${cartItem.id})}" method="post">
+								<label for="quantity">数量: </label>
+								<input type="number" id="quantity" name="quantity" th:value="${cartItem.quantity}" min="1" max="999" step="1">
+								<button class="change_button" type="submit">変更</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center text-center gy-4">
+			<div class="col-4">
+				<form th:if="!${#lists.isEmpty(cartItems)}" method="get" th:action="@{/order/{userId} (userId=${loginUser.id})}">
+					<input class="button text-align-center w-100" type="submit" value="注文へ">
+				</form>
+			</div>
+			<div class="col-9"><a href="/stores/">買い物を続ける</a></div>
+		</div>
+	</div>
+</div>
+</html>
